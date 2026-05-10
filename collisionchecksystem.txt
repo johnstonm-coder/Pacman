@@ -1,0 +1,43 @@
+void loop() {
+
+  int nextX = playero.x;
+  int nextY = playero.y;
+
+  // Read joystick movement
+  if (xValue > 800) {
+    nextX += 2;
+  }
+
+  if (xValue < 200) {
+    nextX -= 2;
+  }
+
+  if (yValue > 800) {
+    nextY += 2;
+  }
+
+  if (yValue < 200) {
+    nextY -= 2;
+  }
+
+  // Assume movement is allowed
+  bool canMove = true;
+
+  // Check collisions
+  for (int g = 0; g < NUM_WALLS; g++) {
+
+    if (nextX < walls[g].x + walls[g].w &&
+        nextX + playerW > walls[g].x &&
+        nextY < walls[g].y + walls[g].h &&
+        nextY + playerH > walls[g].y) {
+
+      canMove = false;
+    }
+  }
+
+  // Move player only if not colliding
+  if (canMove) {
+    playero.x = nextX;
+    playero.y = nextY;
+  }
+}
